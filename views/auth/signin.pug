@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+	.row
+		.col-md-6.mx-auto
+			.card
+				.card-header
+					|Sign in
+				img.card-img-top(src="/images/list.svg", style="padding: 25px 0 0 0;", width="286", height="180")
+				.card-body
+					form(action="/auth/signin", method="post")
+						.form-group
+							input.form-control(type="text", name="username", placeholder="Username", required)
+						.form-group
+							input.form-control(type="password", name="password", placeholder="Password", required)
+						.form-group
+							button.btn.btn-success.btn-block(type="submit")
+								i.far.fa-user.fa-sm
+								|Sign In
+						.form-group
+							small.float-right
+								|New?
+								span
+									|&nbsp;
+									a(href="/auth/signup")
+										|Create an account.

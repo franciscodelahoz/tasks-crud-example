@@ -1,0 +1,42 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-multi-spaces": 0,
+    "semi": [
+      2,
+      "always"
+    ],
+    "space-before-function-paren": 0,
+    "no-useless-constructor": "off",
+    "no-undef": "off",
+    "padded-blocks": "off",
+    "no-useless-escape": "off",
+    "indent": [
+      2,
+      "tab",
+      {
+        "SwitchCase": 1,
+        "VariableDeclarator": 1
+      }
+    ],
+    "no-tabs": "off",
+    "quotes": [
+      2,
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "one-var": "off",
+    "no-console": "off"
+  }
+}

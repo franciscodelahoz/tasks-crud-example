@@ -1,0 +1,43 @@
+nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark
+	.container
+		a.navbar-brand(href='/')
+			i.fas.fa-cube
+			|Tasks App Example
+		button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup', aria-expanded='false', aria-label='Toggle navigation')
+			span.navbar-toggler-icon
+		#navbarNavAltMarkup.collapse.navbar-collapse
+			ul.navbar-nav.ml-auto
+				-if (user)
+					li.nav-item.dropdown
+						a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+							i.fas.fa-tasks
+							| Tasks
+						.dropdown-menu(aria-labelledby='navbarDropdown')
+							a.dropdown-item(href='/tasks')
+								i.fas.fa-list
+								|All Tasks
+							.dropdown-divider
+							a.dropdown-item(href='/tasks/add')
+								i.fas.fa-plus
+								|Add new task
+					li.nav-item.dropdown
+						a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+							i.fas.fa-user.fa-sm
+							|#{user.username}
+						.dropdown-menu(aria-labelledby='navbarDropdown')
+							a.dropdown-item(href='/users/profile')
+								i.fas.fa-user-circle
+								|Profile
+							.dropdown-divider
+							a.dropdown-item(href='/auth/logout')
+								i.fas.fa-sign-out-alt
+								|Sign out
+				-else
+					li.nav-item
+						a.nav-link(href='/auth/signin')
+							i.far.fa-user.fa-sm
+							|Sign In
+					li.nav-item
+						a.nav-link(href='/auth/signup')
+							i.fas.fa-user-plus.fa-sm
+							|Sign Up

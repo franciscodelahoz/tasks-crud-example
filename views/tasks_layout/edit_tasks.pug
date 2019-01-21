@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+	.row
+		.col-md-6.mx-auto
+			.card
+				.card-header
+					|Edit Task
+				.card-body
+					form(action=`/tasks/edit/${task.id}`, method="post")
+						.form-group
+							input.form-control(type="text", name="t_name", placeholder="Task Name", maxlength="11", value=`${task.name}` autofocus, required)
+						.form-group
+							select.form-control(name="t_importance")
+								option(value="today", selected=(task.importance === 'today' ? 'selected' : undefined)) Today
+								option(value="low", selected=(task.importance === 'low' ? 'selected' : undefined)) Low
+								option(value="high", selected=(task.importance === 'high' ? 'selected' : undefined)) High
+								option(value="critical", selected=(task.importance === 'critical' ? 'selected' : undefined)) Critical
+						.form-group
+							textarea.form-control(name="t_description", rows="4", placeholder="Description", required)
+								|#{task.description}
+						.form-group.form-check
+							input.form-check-input(type="checkbox", id="completed", name="t_completed", checked=(toBool(task.completed) ? 'checked' : undefined), value="true")
+							label.noselect.form-check-label(for="completed")|Complete Task
+						.form-group
+							button.btn.btn-success.btn-block(type="submit")
+								i.fas.fa-edit
+								|Edit Task

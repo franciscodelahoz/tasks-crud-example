@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+	.row
+		.col-md-6.mx-auto
+			.card
+				.card-header
+					|New Task
+				.card-body
+					form(action="/tasks/add", method="post")
+						.form-group
+							input.form-control(type="text", name="t_name", placeholder="Task Name", maxlength="11", autofocus, required)
+						.form-group
+							select.form-control(name="t_importance")
+								option(value="today") Today
+								option(value="low") Low
+								option(value="high") High
+								option(value="critical") Critical
+						.form-group
+							textarea.form-control(name="t_description", rows="4", placeholder="Description", required)
+						.form-group
+							button.btn.btn-success.btn-block(type="submit")
+								i.fas.fa-save
+								|Save Task

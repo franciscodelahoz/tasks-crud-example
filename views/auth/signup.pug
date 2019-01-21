@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+	.row
+		.col-md-6.mx-auto
+			.card
+				.card-header
+					|Create account
+				.card-body
+					form(action="/auth/signup", method="post")
+						.form-group
+							input.form-control(type="text", name="u_username", placeholder="Username", required)
+						.form-group
+							input.form-control(type="text", name="u_firstname", placeholder="First Name", required)
+						.form-group
+							input.form-control(type="text", name="u_lastname", placeholder="Last Name", required)
+						.form-group
+							input.form-control(type="email", name="u_email", placeholder="Email", required)
+						.form-group
+							input.form-control(type="password", name="u_password", placeholder="Password", required)
+						.form-group
+							input.form-control(type="password", name="u_cpassword", placeholder="Confirm password", required)
+						.form-group
+							button.btn.btn-success.btn-block(type="submit")
+								i.fas.fa-user-plus.fa-sm
+								|&nbsp;
+								|Sign Up
+						.form-group
+							small.float-right
+								|Need
+								span
+									|&nbsp;
+									a(href="/auth/signin")
+										|Sign In
+								span
+									|?
+
