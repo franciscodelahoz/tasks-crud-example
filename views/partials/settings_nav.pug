@@ -1,0 +1,6 @@
+mixin settings_nav(page)
+	.list-group
+		a.list-group-item.list-group-item-secondary
+			|Personal settings
+		a.list-group-item.list-group-item-action(class=`${page === 'profile' ? 'active' : ''}`, href="/settings/profile")|Porfile
+		a.list-group-item.list-group-item-action(class=`${page === 'account' ? 'active' : ''}`, href="/settings/account")|Account

@@ -43,3 +43,8 @@ body {
 .fas, .far {
 	margin-right: 6px;
 }
+
+.list-group > .list-group-item {
+	padding-top: 7px;
+	padding-bottom: 7px;
+}

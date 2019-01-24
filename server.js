@@ -52,6 +52,7 @@ app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/authentications'));
 app.use('/tasks', require('./routes/tasks'));
 app.use('/users', require('./routes/users'));
+app.use('/settings', require('./routes/settings'));
 
 app.listen(app.get('port'), () => {
 	console.log(`Server running on port ${app.get('port')}`);
