@@ -25,10 +25,13 @@ nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark
 							i.fas.fa-user.fa-sm
 							|#{user.username}
 						.dropdown-menu(aria-labelledby='navbarDropdown')
-							a.dropdown-item(href='/users/profile')
+							a.dropdown-item(href=`/users/profile/${user.username}`)
 								i.fas.fa-user-circle
 								|Profile
 							.dropdown-divider
+							a.dropdown-item(href='/settings/profile')
+								i.fas.fa-cog
+								|Settings
 							a.dropdown-item(href='/auth/logout')
 								i.fas.fa-sign-out-alt
 								|Sign out

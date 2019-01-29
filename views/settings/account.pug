@@ -1,0 +1,37 @@
+extends ../layout
+include ../partials/settings_nav
+
+block content
+	.row
+		.col-lg-3
+			+settings_nav('account')
+		.col-lg-9
+			.col-md-11.mx-auto
+				h2|Account
+				form(action="/", method="post")
+					.form-group
+						label(for="old_password")|Old Password
+						input#old_password.form-control(type="password", name="old_password")
+					.form-group
+						label(for="new_password")|New Password
+						input#new_password.form-control(type="password", name="new_password")
+					.form-group
+						button.btn.btn-success.float-right(type="submit")
+							|Update password
+				br
+				br
+				h2|Email
+				form(action="/", method="post")
+					.form-group
+						label(for="email") Email
+						input#email.form-control(type="email", name="email", value=`${user.email}`)
+					.form-group
+						button.btn.btn-success.float-right(type="submit")
+							|Upate Email
+				br
+				br
+				h2|Delete Account
+				form(action="", method="post")
+					.form-group
+						button.btn.btn-danger(type="submit")
+							|Delete your account

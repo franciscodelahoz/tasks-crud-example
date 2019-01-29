@@ -12,7 +12,7 @@
 }
 
 body {
-	background: #F5F6F5;
+	background: #fdfdfd;
 }
 
 .index {
@@ -42,4 +42,9 @@ body {
 
 .fas, .far {
 	margin-right: 6px;
+}
+
+.list-group > .list-group-item {
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
