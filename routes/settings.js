@@ -27,12 +27,12 @@ router.post('/updateprofile', isAuthenticated, async (req, res) => {
 	if (req.user) { AuthenticatedUser = req.user; }
 
 	if (!AuthenticatedUser) {
-		req.flash('error', 'Error to obtaine the login user information');
+		req.flash('error', 'Error to obtain the login user information');
 		return res.redirect('/settings/profile');
 	}
 
 	if (!username || !firstname || !lastname) {
-		req.flash('error', 'Some profile data is missing');
+		req.flash('error', 'Missing one or more user profile data');
 		return res.redirect('/settings/profile');
 	}
 
@@ -46,13 +46,13 @@ router.post('/updateprofile', isAuthenticated, async (req, res) => {
 		const check_user = await db.query(QueryCheckUsername);
 
 		if (check_user.length) {
-			req.flash('error', 'The username selected is in used');
+			req.flash('error', 'The username entered is already in use');
 			return res.redirect('/settings/profile');
 		}
 
 	} catch(error) {
 		console.log(error);
-		req.flash('error', 'A error has ocurred while is checking the user name');
+		req.flash('error', 'An error occurred while verifying the username');
 		return res.redirect('/settings/profile');
 	}
 
@@ -66,10 +66,10 @@ router.post('/updateprofile', isAuthenticated, async (req, res) => {
 
 	try {
 		await db.query(queryUpdateProfile);
-		req.flash('success', 'Profile updated successfully');
+		req.flash('success', 'User profile updated successfully');
 	} catch (error) {
 		console.log(error);
-		req.flash('error', 'An error occurred while updating the profile');
+		req.flash('error', `An error occurred while updating the user's profile`);
 	}
 
 	return res.redirect('/settings/profile');
@@ -92,7 +92,7 @@ router.post('/updatepassword', isAuthenticated, async (req, res) => {
 	}
 
 	if (new_password !== confirm_password) {
-		req.flash('error', `The password doesn't match`);
+		req.flash('error', `Passwords do not match`);
 		return res.redirect('/settings/account');
 	}
 
@@ -106,7 +106,7 @@ router.post('/updatepassword', isAuthenticated, async (req, res) => {
 
 	try {
 		await db.query(queryUpdatePassword);
-		req.flash('success', 'password updated successfully');
+		req.flash('success', 'Password updated successfully');
 	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while updating the password');
@@ -122,12 +122,12 @@ router.post('/update_email', isAuthenticated, async (req, res) => {
 	if (req.user) { AuthenticatedUser = req.user; }
 
 	if (!AuthenticatedUser) {
-		req.flash('error', 'Error to obtain the login user information');
+		req.flash('error', `Failed to get the user's login information`);
 		return res.redirect('/settings/account');
 	}
 
 	if (!email) {
-		req.flash('error', 'The email is missing');
+		req.flash('error', 'The email address has not been entered');
 		return res.redirect('/settings/account');
 	}
 
@@ -141,13 +141,13 @@ router.post('/update_email', isAuthenticated, async (req, res) => {
 		const check_user = await db.query(QueryCheckUsersEmail);
 
 		if (check_user.length) {
-			req.flash('error', 'The email selected is in used');
+			req.flash('error', 'The selected mail is already in use');
 			return res.redirect('/settings/account');
 		}
 
 	} catch(error) {
 		console.log(error);
-		req.flash('error', 'A error has ocurred while is checking the user name');
+		req.flash('error', 'An error occurred while checking the email address');
 		return res.redirect('/settings/account');
 	}
 
@@ -159,17 +159,17 @@ router.post('/update_email', isAuthenticated, async (req, res) => {
 
 	try {
 		await db.query(queryUpdateProfile);
-		req.flash('success', 'Email updated successfully');
+		req.flash('success', 'Mail address has been updated successfully');
 	} catch (error) {
 		console.log(error);
-		req.flash('error', 'An error occurred while updating the profile');
+		req.flash('error', 'An error occurred while updating the Mail Address');
 	}
 
 	return res.redirect('/settings/account');
 });
 
 router.post('/deleteaccount', isAuthenticated, (req, res) => {
-	req.flash('info', `This function is not implemented`);
+	req.flash('info', `This function has not yet been implemented`);
 	return res.redirect('/settings/account');
 });
 
