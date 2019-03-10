@@ -8,17 +8,17 @@ block content
 		.col-lg-9
 			.col-md-11.mx-auto
 				h2|Profile
-				form(action="/", method="post")
+				form(action=`/settings/updateprofile`, method="post")
 					.form-group
 						label(for="username") Username
-						input#username.form-control(type="text", value=`${user.username}`)
+						input#username.form-control(type="text", name="username", value=`${user.username}`)
 					.form-row
 						.form-group.col-md-6
 							label(for="firstname")|First Name
-							input#firstname.form-control(type="text", value=`${user.firstname}`)
+							input#firstname.form-control(type="text", name="firstname", value=`${user.firstname}`)
 						.form-group.col-md-6
 							label(for="lastname")|Last Name
-							input#lastname.form-control(type="text", value=`${user.lastname}`)
+							input#lastname.form-control(type="text", name="lastname", value=`${user.lastname}`)
 					.form-group
 						button.btn.btn-success.float-right(type="submit")
 							|Update profile

@@ -8,7 +8,7 @@ block content
 		.col-lg-9
 			.col-md-11.mx-auto
 				h2|Account
-				form(action="/", method="post")
+				form(action="/settings/updatepassword", method="post")
 					.form-group
 						label(for="old_password")|Old Password
 						input#old_password.form-control(type="password", name="old_password")
@@ -16,12 +16,15 @@ block content
 						label(for="new_password")|New Password
 						input#new_password.form-control(type="password", name="new_password")
 					.form-group
+						label(for="confirm_password")|Confirm Password
+						input#confirm_password.form-control(type="password", name="confirm_password")
+					.form-group
 						button.btn.btn-success.float-right(type="submit")
 							|Update password
 				br
 				br
 				h2|Email
-				form(action="/", method="post")
+				form(action=`/settings/update_email`, method="post")
 					.form-group
 						label(for="email") Email
 						input#email.form-control(type="email", name="email", value=`${user.email}`)
@@ -31,7 +34,7 @@ block content
 				br
 				br
 				h2|Delete Account
-				form(action="", method="post")
+				form(action="/settings/deleteaccount", method="post")
 					.form-group
 						button.btn.btn-danger(type="submit")
 							|Delete your account

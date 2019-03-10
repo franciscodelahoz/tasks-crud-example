@@ -24,7 +24,7 @@ router.get('/add', isAuthenticated, (req, res) => {
 	res.render('tasks_layout/add_tasks');
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', isAuthenticated, async (req, res) => {
 	const NewTask = {
 		name: req.body.t_name,
 		importance: req.body.t_importance,

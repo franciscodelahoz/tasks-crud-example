@@ -4,7 +4,7 @@ USE tasks_example;
 
 CREATE TABLE users(
 	id INT(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id),
-	username VARCHAR(16) NOT NULL,
+	username VARCHAR(25) NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
 	lastname VARCHAR(50) NOT NULL,
 	email VARCHAR(80) NOT NULL,

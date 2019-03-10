@@ -8,3 +8,8 @@ if messages.error
 		|#{messages.error}
 		button(type="button", class="close" data-dismiss="alert" aria-label="close")
 			i.far.fa-times-circle
+if messages.info
+	.alert.alert-info.alert-dismissible.fade.show.col-md-12(role="alert")
+		|#{messages.info}
+		button(type="button", class="close" data-dismiss="alert" aria-label="close")
+			i.far.fa-times-circle
