@@ -1,4 +1,24 @@
 extends ../layout
 
 block content
-	h3 Profile
+	.row
+		.col-lg-8.mx-auto
+			-if (!_Error && Found)
+				img.card-img-top(src="/images/user-picture.svg", style="margin: 0 0 15px 0;" width="230", height="230")
+				h1.text-center(style="margin-bottom: 1px;")|#{UserInformation.firstname} #{UserInformation.lastname}
+				h3.text-center(style="color: #737372;")|#{UserInformation.username}
+				.tasks-information.text-center
+					h5(style="font-size: 1.1rem")|Tasks:
+						span.ml-2.badge.badge-warning Total tasks #{UserInformation.tasks_count}
+						span.ml-2.badge.badge-success Completed tasks #{UserInformation.tasks_completed}
+			-else if (!_Error && !Found)
+				.alert.alert-info(role="alert")
+					h4.alert-heading|Opps!
+					hr(style="margin-top: 10px; margin-bottom: 10px;")
+					p|No profile information found
+			-else
+				h1|
+				.alert.alert-danger(role="alert")
+					h4.alert-heading|Error
+					hr(style="margin-top: 10px; margin-bottom: 10px;")
+					p|An error occurred while displaying the profile
