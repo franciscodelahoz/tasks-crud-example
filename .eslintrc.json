@@ -1,10 +1,13 @@
 {
   "env": {
     "browser": true,
-    "commonjs": true,
     "es6": true
   },
   "extends": "eslint:recommended",
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -25,7 +28,11 @@
       "tab",
       {
         "SwitchCase": 1,
-        "VariableDeclarator": 1
+        "VariableDeclarator": 1,
+        "MemberExpression": 1,
+        "ArrayExpression": 1,
+        "ImportDeclaration": 1,
+        "flatTernaryExpressions": true
       }
     ],
     "no-tabs": "off",
@@ -37,6 +44,62 @@
       }
     ],
     "one-var": "off",
-    "no-console": "off"
+    "no-throw-literal": "off",
+    "prefer-promise-reject-errors": "off",
+    "eqeqeq": [
+      2,
+      "always"
+    ],
+    "no-console": "off",
+    "curly": 2,
+    "no-use-before-define": 2,
+    "no-loop-func": 2,
+    "camelcase": 2,
+    "no-sequences": 2,
+    "eol-last": 2,
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "brace-style": [
+      2,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "keyword-spacing": [
+      2,
+      {
+        "after": true,
+        "before": true
+      }
+    ],
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
+    "no-bitwise": "off",
+    "arrow-spacing": 2,
+    "space-in-parens": [
+      2,
+      "never"
+    ],
+    "no-inner-declarations": [
+      2,
+      "functions"
+    ],
+    "space-unary-ops": 2,
+    "no-unsafe-negation": 2,
+    "rest-spread-spacing": 2,
+    "space-infix-ops": 2,
+    "no-shadow": 2,
+    "no-unused-vars": [
+      2,
+      {
+        "args": "none"
+      }
+    ],
+    "no-trailing-spaces": 2
   }
 }
