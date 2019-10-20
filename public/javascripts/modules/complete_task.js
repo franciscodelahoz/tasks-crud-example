@@ -16,6 +16,7 @@ export default class CompleteTask {
 
 					return Promise.reject(error);
 				}
+
 				return json;
 			});
 	}
@@ -24,6 +25,7 @@ export default class CompleteTask {
 		if (this.value) {
 			this.label.style.textDecoration = 'line-through';
 			this.label.title = 'Task Completed';
+
 		} else {
 			this.label.style.textDecoration = 'none';
 			this.label.removeAttribute('title');

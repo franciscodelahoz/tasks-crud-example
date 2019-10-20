@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../database/database');
+const database = require('../database/database');
 const { isAuthenticated } = require('../lib/isAuthenticated');
 const { encryptPassword, compareCryptedPassword } = require('../lib/utils');
+
+const util = require('util');
 
 router.get('/', isAuthenticated, (req, res) => {
 	res.redirect('settings/profile');
@@ -36,77 +38,94 @@ router.post('/updateprofile', isAuthenticated, async (req, res) => {
 		return res.redirect('/settings/profile');
 	}
 
-	try {
-		const QueryCheckUsername = `
-			SELECT * FROM users WHERE
-				username='${username}'
-			AND id!='${AuthenticatedUser.id}';
-		`;
-
-		const check_user = await db.query(QueryCheckUsername);
-
-		if (check_user.length) {
-			req.flash('error', 'The username entered is already in use');
+	database.getConnection(async function(error, connection) {
+		if (error) {
+			req.flash('error', 'Error conecting to database');
 			return res.redirect('/settings/profile');
 		}
 
-	} catch(error) {
-		console.log(error);
-		req.flash('error', 'An error occurred while verifying the username');
-		return res.redirect('/settings/profile');
-	}
+		connection.query = util.promisify(connection.query);
 
-	let queryUpdateProfile = `
-		UPDATE users SET
-			username='${username}',
-			firstname='${firstname}',
-			lastname='${lastname}'
-		WHERE id='${AuthenticatedUser.id}';
-	`;
+		try {
+			const QueryCheckUsername = `
+				SELECT * FROM users WHERE
+					username='${username}'
+				AND id!='${AuthenticatedUser.id}';
+			`;
 
-	try {
-		await db.query(queryUpdateProfile);
-		req.flash('success', 'User profile updated successfully');
-	} catch (error) {
-		console.log(error);
-		req.flash('error', `An error occurred while updating the user's profile`);
-	}
+			const consultedUser = await connection.query(QueryCheckUsername);
 
-	return res.redirect('/settings/profile');
+			if (consultedUser.length) {
+				req.flash('error', 'The username entered is already in use');
+				connection.release();
+				return res.redirect('/settings/profile');
+			}
+
+		} catch (consultedUserError) {
+			console.log(consultedUserError);
+			connection.release();
+
+			req.flash('error', 'An error occurred while verifying the username');
+			return res.redirect('/settings/profile');
+		}
+
+		try {
+			let queryUpdateProfile = `
+				UPDATE users SET
+					username='${username}',
+					firstname='${firstname}',
+					lastname='${lastname}'
+				WHERE id='${AuthenticatedUser.id}';
+			`;
+
+			await connection.query(queryUpdateProfile);
+			connection.release();
+
+			req.flash('success', 'User profile updated successfully');
+			return res.redirect('/settings/profile');
+
+		} catch (errorUpdateProfile) {
+			console.log(errorUpdateProfile);
+			connection.release();
+
+			req.flash('error', `An error occurred while updating the user's profile`);
+		}
+	});
 });
 
 router.post('/updatepassword', isAuthenticated, async (req, res) => {
-	let old_password = '', new_password = '', confirm_password = '';
+	let oldPassword = '', newPassword = '', confirmPassword = '';
 	let AuthenticatedUser = '';
 
-	if (req.body && req.body.old_password) { old_password = req.body.old_password; }
-	if (req.body && req.body.new_password) { new_password = req.body.new_password; }
-	if (req.body && req.body.confirm_password) { confirm_password = req.body.confirm_password; }
+	if (req.body && req.body.old_password) { oldPassword = req.body.old_password; }
+	if (req.body && req.body.new_password) { newPassword = req.body.new_password; }
+	if (req.body && req.body.confirm_password) { confirmPassword = req.body.confirm_password; }
 	if (req.user) { AuthenticatedUser = req.user; }
 
-	const checkOldPassword = await compareCryptedPassword(AuthenticatedUser.password, old_password);
+	const checkOldPassword = await compareCryptedPassword(AuthenticatedUser.password, oldPassword);
 
 	if (!checkOldPassword) {
 		req.flash('error', `The old password is incorrect`);
 		return res.redirect('/settings/account');
 	}
 
-	if (new_password !== confirm_password) {
+	if (newPassword !== confirmPassword) {
 		req.flash('error', `Passwords do not match`);
 		return res.redirect('/settings/account');
 	}
 
-	const crypt_pass = await encryptPassword(new_password);
+	const encryptedPassword = await encryptPassword(newPassword);
 
 	let queryUpdatePassword = `
 		UPDATE users SET
-			password='${crypt_pass}'
+			password='${encryptedPassword}'
 		WHERE id='${AuthenticatedUser.id}';
 	`;
 
 	try {
-		await db.query(queryUpdatePassword);
+		await database.query(queryUpdatePassword);
 		req.flash('success', 'Password updated successfully');
+
 	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while updating the password');
@@ -138,14 +157,14 @@ router.post('/update_email', isAuthenticated, async (req, res) => {
 			AND id!='${AuthenticatedUser.id}';
 		`;
 
-		const check_user = await db.query(QueryCheckUsersEmail);
+		const checkUser = await database.query(QueryCheckUsersEmail);
 
-		if (check_user.length) {
+		if (checkUser.length) {
 			req.flash('error', 'The selected mail is already in use');
 			return res.redirect('/settings/account');
 		}
 
-	} catch(error) {
+	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while checking the email address');
 		return res.redirect('/settings/account');
@@ -158,8 +177,9 @@ router.post('/update_email', isAuthenticated, async (req, res) => {
 	`;
 
 	try {
-		await db.query(queryUpdateProfile);
+		await database.query(queryUpdateProfile);
 		req.flash('success', 'Mail address has been updated successfully');
+
 	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while updating the Mail Address');

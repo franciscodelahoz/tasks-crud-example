@@ -2,7 +2,7 @@ CREATE DATABASE tasks_example;
 
 USE tasks_example;
 
-CREATE TABLE users(
+CREATE TABLE users (
 	id INT(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id),
 	username VARCHAR(25) NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE users(
 
 DESCRIBE users;
 
-CREATE TABLE tasks(
+CREATE TABLE tasks (
 	id INT(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id),
 	name VARCHAR(255) NOT NULL,
 	importance VARCHAR(10) NOT NULL,

@@ -6,7 +6,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 
 const dotenv = require('dotenv');
-dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config({ path: path.join(__dirname, '.env.example') });
 
 const app = express();
 require('./lib/passport/passport');

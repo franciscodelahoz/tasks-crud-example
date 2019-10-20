@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../database/database');
+const database = require('../database/database');
 
 router.get('/profile/:user', async (req, res) => {
 	let UserToSearch = '', UserInformation = {}, _Error = false;
@@ -24,14 +24,14 @@ router.get('/profile/:user', async (req, res) => {
 			where a.username = '${UserToSearch}';
 		`;
 
-		userConsult = await db.query(SelectUser);
+		userConsult = await database.query(SelectUser);
 
 		if (userConsult.length) {
 			UserInformation = userConsult[0];
 			Found = true;
 		}
 
-	} catch(error) {
+	} catch (error) {
 		console.log(error);
 		_Error = true;
 	}
