@@ -17,8 +17,8 @@ router.get('/profile/:user', async (req, res) => {
 				a.username as username,
 				a.firstname as firstname,
 				a.lastname as lastname,
-				(select count(*) from tasks x where x.user_id = a.id) as tasks_count,
-				(select count(*) from tasks x where x.user_id = a.id and x.completed = 1) as tasks_completed
+				(select count(*) from tasks x where x.userid = a.id) as tasks_count,
+				(select count(*) from tasks x where x.userid = a.id and x.completed = 1) as tasks_completed
 			from
 				users a
 			where a.username = '${UserToSearch}';

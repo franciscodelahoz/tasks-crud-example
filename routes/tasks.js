@@ -8,16 +8,16 @@ const { toBool } = require('../lib/utils');
 const { isAuthenticated } = require('../lib/isAuthenticated');
 
 router.get('/', isAuthenticated, async (req, res) => {
-	const tasks = await database.query('SELECT * FROM tasks WHERE user_id = ?;', [req.user.id]);
+	const tasks = await database.query('SELECT * FROM tasks WHERE userid = ?;', [req.user.id]);
 
 	res.render('tasks_layout/tasks_list', {
 		tasks: tasks,
 		timeago: helpers.timeago,
 		formatTime: helpers.formatTime,
-		task_card_border: helpers.taskCardBorder,
+		taskCardBorder: helpers.taskCardBorder,
 		strikethrough: helpers.strikethrough,
 		checkCompleted: helpers.checkCompleted,
-		task_card_background: helpers.taskCardBackground
+		taskCardBackground: helpers.taskCardBackground
 	});
 });
 
@@ -31,7 +31,7 @@ router.post('/add', isAuthenticated, async (req, res) => {
 		importance: req.body.t_importance,
 		description: req.body.t_description,
 		completed: false,
-		user_id: req.user.id
+		userid: req.user.id
 	};
 
 	try {

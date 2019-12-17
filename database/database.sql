@@ -19,9 +19,9 @@ CREATE TABLE tasks (
 	importance VARCHAR(10) NOT NULL,
 	description TEXT,
 	completed BOOLEAN,
-	user_id INT(11),
+	userid INT(11),
 	created_time TIMESTAMP NOT NULL DEFAULT current_timestamp,
-	CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(id)
+	CONSTRAINT fk_users FOREIGN KEY (userid) REFERENCES users(id)
 );
 
 DESCRIBE tasks;
