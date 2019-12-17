@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../database/database');
+const database = require('../database/database');
 
 router.get('/profile/:user', async (req, res) => {
 	let UserToSearch = '', UserInformation = {}, _Error = false;
@@ -17,21 +17,21 @@ router.get('/profile/:user', async (req, res) => {
 				a.username as username,
 				a.firstname as firstname,
 				a.lastname as lastname,
-				(select count(*) from tasks x where x.user_id = a.id) as tasks_count,
-				(select count(*) from tasks x where x.user_id = a.id and x.completed = 1) as tasks_completed
+				(select count(*) from tasks x where x.userid = a.id) as tasks_count,
+				(select count(*) from tasks x where x.userid = a.id and x.completed = 1) as tasks_completed
 			from
 				users a
 			where a.username = '${UserToSearch}';
 		`;
 
-		userConsult = await db.query(SelectUser);
+		userConsult = await database.query(SelectUser);
 
 		if (userConsult.length) {
 			UserInformation = userConsult[0];
 			Found = true;
 		}
 
-	} catch(error) {
+	} catch (error) {
 		console.log(error);
 		_Error = true;
 	}

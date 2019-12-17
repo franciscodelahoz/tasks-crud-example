@@ -4,8 +4,8 @@ block content
 	.row
 		-for (let i = 0; i < tasks.length; i++)
 			.col-md-4.mb-4
-				.card(class=`${task_card_border(tasks[i].importance)}`)
-					.card-header(class=`${task_card_background(tasks[i].importance)}` style="color: white;")
+				.card(class=`${taskCardBorder(tasks[i].importance)}`)
+					.card-header(class=`${taskCardBackground(tasks[i].importance)}` style="color: white;")
 						.form-check
 							label.noselect.form-check-label(for=`ct_${tasks[i].id}`)
 								input.form-check-input(type="checkbox", id=`ct_${tasks[i].id}`, style="margin-top: .45rem !important;", onchange="changeTaskStatus(this)" checked=(checkCompleted(tasks[i].completed)))

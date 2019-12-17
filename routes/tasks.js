@@ -1,22 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../database/database');
+const database = require('../database/database');
 const helpers = require('../lib/helpers');
 const { toBool } = require('../lib/utils');
 
 const { isAuthenticated } = require('../lib/isAuthenticated');
 
 router.get('/', isAuthenticated, async (req, res) => {
-	const tasks = await db.query('SELECT * FROM tasks WHERE user_id = ?;', [req.user.id]);
+	const tasks = await database.query('SELECT * FROM tasks WHERE userid = ?;', [req.user.id]);
+
 	res.render('tasks_layout/tasks_list', {
 		tasks: tasks,
 		timeago: helpers.timeago,
 		formatTime: helpers.formatTime,
-		task_card_border: helpers.task_card_border,
+		taskCardBorder: helpers.taskCardBorder,
 		strikethrough: helpers.strikethrough,
 		checkCompleted: helpers.checkCompleted,
-		task_card_background: helpers.task_card_background
+		taskCardBackground: helpers.taskCardBackground
 	});
 });
 
@@ -30,12 +31,13 @@ router.post('/add', isAuthenticated, async (req, res) => {
 		importance: req.body.t_importance,
 		description: req.body.t_description,
 		completed: false,
-		user_id: req.user.id
+		userid: req.user.id
 	};
 
 	try {
-		await db.query('INSERT INTO tasks SET ?', [NewTask]);
+		await database.query('INSERT INTO tasks SET ?', [NewTask]);
 		req.flash('success', 'Task added successfully');
+
 	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while creating the task');
@@ -49,9 +51,10 @@ router.post('/completed', isAuthenticated, async (req, res) => {
 	const status = toBool(req.body.status);
 
 	try {
-		await db.query('UPDATE tasks SET completed = ? WHERE id = ?', [status, id]);
+		await database.query('UPDATE tasks SET completed = ? WHERE id = ?', [status, id]);
 		return res.status(200).json({ message: status ? 'Taks Completed' : 'Task not completed' });
-	} catch(error) {
+
+	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: 'An error occurred updating the status of the task' });
 	}
@@ -61,9 +64,10 @@ router.get('/delete/:id', isAuthenticated, async (req, res) => {
 	const id = req.params.id;
 
 	try {
-		await db.query('DELETE FROM tasks WHERE id = ?', [id]);
+		await database.query('DELETE FROM tasks WHERE id = ?', [id]);
 		req.flash('success', 'Task deleted successfully');
-	} catch(error) {
+
+	} catch (error) {
 		console.log(error);
 		req.flash('error', 'There was an error deleting the task');
 	}
@@ -75,10 +79,12 @@ router.get('/edit/:id', isAuthenticated, async (req, res) => {
 	const id = req.params.id;
 
 	try {
-		const selected_task = await db.query('SELECT * FROM tasks WHERE id = ?', [id]);
-		const task = selected_task[0];
+		const selectedTask = await database.query('SELECT * FROM tasks WHERE id = ?', [id]);
+		const task = selectedTask[0];
+
 		res.render('tasks_layout/edit_tasks',  { task: task, toBool: toBool });
-	} catch(error) {
+
+	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while loading task information');
 		res.redirect('/tasks');
@@ -95,9 +101,10 @@ router.post('/edit/:id', isAuthenticated, async (req, res) => {
 	};
 
 	try {
-		await db.query('UPDATE tasks SET ? WHERE id = ?', [EditTask, id]);
+		await database.query('UPDATE tasks SET ? WHERE id = ?', [EditTask, id]);
 		req.flash('success', 'Task edited successfully');
-	} catch(error) {
+
+	} catch (error) {
 		console.log(error);
 		req.flash('error', 'An error occurred while updating the task');
 	}
