@@ -29,7 +29,7 @@
     "timeago.js": "^4.0.1"
   },
   "devDependencies": {
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "nodemon": "^2.0.2"
   }
 }
