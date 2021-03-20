@@ -11,7 +11,7 @@
   "author": "Francisco De La Hoz",
   "license": "MIT",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.0",
     "connect-flash": "^0.1.1",
